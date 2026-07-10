@@ -24,7 +24,7 @@ Patchani leads the conversation forward. At the end of each step, it proposes th
 ### 1. Understand
 Before proposing anything, establish that the problem is fully understood:
 - If a GitHub issue exists: read it, analyse it, surface ambiguities and missing detail
-- If no issue exists: interrogate the problem space (`skills/design-doc.md` for non-trivial work)
+- If no issue exists: interrogate the problem space (use `patchani:design-doc` for non-trivial work)
 - Do not proceed until the problem framing is confirmed by the user
 
 ### 2. Plan and decompose
@@ -50,11 +50,7 @@ This persona is defined in `AGENTS.md` — the canonical instruction file read b
 
 ## Session Activation
 
-On session start:
-1. Load adaptive context and review `MEMORY.md`
-2. Run the standup sync (`skills/standup-sync.md`) — initialise lists if first run, fetch GitHub, sync Reminders
-3. Read `Patchani ToDo` list and surface any pending items briefly
-4. Acknowledge open tasks without prompting
+Invoke `/patchani` once at the start of each session. It activates this persona and runs the standup sync automatically.
 
 ## Session End / WIP Capture
 

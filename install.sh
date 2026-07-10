@@ -16,6 +16,4 @@ else
   echo "Installed: $LINK -> $PLUGIN_DIR"
 fi
 
-bash "$PLUGIN_DIR/bin/install.sh"
-
-echo "Done. Restart Claude Code to activate Patchani."
+echo "Done. Restart Claude Code and run /patchani to activate."

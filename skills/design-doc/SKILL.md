@@ -1,3 +1,8 @@
+---
+name: design-doc
+description: Write a rigorous design document — interrogates first, writes second. Enforces problem-before-solution discipline, scope contracts, and verifiable criteria.
+---
+
 # Skill: Design Document
 
 ## Trigger
