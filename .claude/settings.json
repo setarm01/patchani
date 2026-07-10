@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash",
+      "WebFetch",
+      "mcp__sequential-thinking__*",
+      "mcp__github__*",
+      "mcp__linear__*",
+      "mcp__apple-reminders__*",
+      "mcp__apple-notes__*",
+      "mcp__filesystem__*"
+    ]
+  }
+}

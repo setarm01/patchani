@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/github-mcp-server",
+      "args": ["stdio"],
+      "env": {
+        "GITHUB_TOOLSETS": "issues,pull_requests,projects,users"
+      }
+    }
+  }
+}
