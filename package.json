@@ -1,0 +1,56 @@
+{
+  "name": "@setarm01/patchani",
+  "version": "1.0.0",
+  "description": "Engineering assistant for Pi Dev - structured workflows, research orchestration, and institutional memory",
+  "keywords": ["pi-package", "design-doc", "workflow", "github", "reminders"],
+  "author": "Michelangelo Setaro",
+  "license": "MIT",
+  "main": "extensions/design-doc.ts",
+  "dependencies": {
+    "@quintinshaw/pi-dynamic-workflows": "^3.4.1"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.0.0",
+    "@types/node": "^20.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0",
+    "@vitest/coverage-v8": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  },
+  "bundledDependencies": [
+    "@quintinshaw/pi-dynamic-workflows"
+  ],
+  "pi": {
+    "extensions": [
+      "extensions/persona.ts",
+      "extensions/design-doc.ts",
+      "extensions/standup-sync.ts",
+      "node_modules/@quintinshaw/pi-dynamic-workflows/extensions"
+    ],
+    "skills": [
+      "node_modules/@quintinshaw/pi-dynamic-workflows/skills"
+    ]
+  },
+  "scripts": {
+    "test": "npm run test:unit && npm run test:smoke",
+    "test:unit": "vitest run",
+    "test:smoke": "bash tests/integration/smoke.sh",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint extensions/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "preinstall": "echo 'Installing Patchani with bundled dependencies...'",
+    "postinstall": "echo 'Patchani installed successfully! Use: pi install npm:@setarm01/patchani'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/setarm01/patchani"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

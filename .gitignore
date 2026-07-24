@@ -1,1 +1,10 @@
+node_modules/
+*.log
 .DS_Store
+dist/
+*.tgz
+.pi/
+coverage/
+.vitest-cache/
+*.test.js
+*.test.d.ts
