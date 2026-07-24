@@ -54,19 +54,47 @@ export default function (pi: ExtensionAPI) {
     if (personaContent) {
       personaActive = true;
       
-      // Show styled banner
-      const banner = [
-        "",
-        chalk.cyan("╔═══════════════════════════════════════════════════════════╗"),
-        chalk.cyan("║") + "                                                           " + chalk.cyan("║"),
-        chalk.cyan("║") + "   " + chalk.bold.white("PATCHANI") + "                                             " + chalk.cyan("║"),
-        chalk.cyan("║") + "   " + chalk.dim("Engineering Assistant for Pi Dev") + "                " + chalk.cyan("║"),
-        chalk.cyan("║") + "                                                           " + chalk.cyan("║"),
-        chalk.cyan("╚═══════════════════════════════════════════════════════════╝"),
-        ""
-      ].join("\n");
+      // Show welcome screen in TUI mode only
+      if (ctx.mode === "tui") {
+        const { Text, Box } = await import("@earendil-works/pi-tui");
+        
+        await ctx.ui.custom((tui) => {
+          const width = 60;
+          const lines = [
+            "",
+            chalk.bold.cyan("  PATCHANI"),
+            "",
+            chalk.dim("  Engineering Assistant for Pi Dev"),
+            "",
+            chalk.dim("  \u2022 Design documents with research workflows"),
+            chalk.dim("  \u2022 GitHub \u2192 Apple Reminders sync"),
+            chalk.dim("  \u2022 Structured planning & execution"),
+            "",
+            chalk.dim.italic("  Press any key to continue..."),
+            ""
+          ];
+          
+          const content = lines.join("\n");
+          const text = new Text(content, 0, 0);
+          const box = new Box(
+            text,
+            { border: "rounded", borderColor: "cyan", title: " Welcome ", titleColor: "cyan" },
+            width,
+            lines.length + 2
+          );
+          
+          return {
+            render: () => box,
+            handleKey: () => {
+              return { close: true };
+            }
+          };
+        });
+      } else {
+        // Simple console banner for non-TUI modes
+        console.log(chalk.cyan("\nPATCHANI") + chalk.dim(" - Engineering Assistant for Pi Dev\n"));
+      }
       
-      console.log(banner);
       ctx.ui.notify("Persona active", "info");
     } else {
       ctx.ui.notify("Patchani persona file not found", "warning");
