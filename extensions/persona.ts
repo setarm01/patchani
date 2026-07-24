@@ -8,6 +8,7 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import chalk from "chalk";
 
 export default function (pi: ExtensionAPI) {
   
@@ -53,24 +54,20 @@ export default function (pi: ExtensionAPI) {
     if (personaContent) {
       personaActive = true;
       
-      // Show banner
-      const banner = `
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║   ██████╗  █████╗ ████████╗ ██████╗██╗  ██╗ █████╗ ███╗   ██╗  ║
-║   ██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██║  ██║██╔══██╗████╗  ██║  ║
-║   ██████╔╝███████║   ██║   ██║     ███████║███████║██╔██╗ ██║  ║
-║   ██╔═══╝ ██╔══██║   ██║   ██║     ██╔══██║██╔══██║██║╚██╗██║  ║
-║   ██║     ██║  ██║   ██║   ╚██████╗██║  ██║██║  ██║██║ ╚████║  ║
-║   ╚═╝     ╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝  ║
-║                                                              ║
-║              Engineering Assistant for Pi Dev               ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
-      `;
+      // Show styled banner
+      const banner = [
+        "",
+        chalk.cyan("╔═══════════════════════════════════════════════════════════╗"),
+        chalk.cyan("║") + "                                                           " + chalk.cyan("║"),
+        chalk.cyan("║") + "   " + chalk.bold.white("PATCHANI") + "                                             " + chalk.cyan("║"),
+        chalk.cyan("║") + "   " + chalk.dim("Engineering Assistant for Pi Dev") + "                " + chalk.cyan("║"),
+        chalk.cyan("║") + "                                                           " + chalk.cyan("║"),
+        chalk.cyan("╚═══════════════════════════════════════════════════════════╝"),
+        ""
+      ].join("\n");
       
       console.log(banner);
-      ctx.ui.notify("Patchani persona activated", "info");
+      ctx.ui.notify("Persona active", "info");
     } else {
       ctx.ui.notify("Patchani persona file not found", "warning");
     }
