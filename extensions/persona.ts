@@ -52,6 +52,24 @@ export default function (pi: ExtensionAPI) {
     
     if (personaContent) {
       personaActive = true;
+      
+      // Show banner
+      const banner = `
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   ██████╗  █████╗ ████████╗ ██████╗██╗  ██╗ █████╗ ███╗   ██╗  ║
+║   ██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██║  ██║██╔══██╗████╗  ██║  ║
+║   ██████╔╝███████║   ██║   ██║     ███████║███████║██╔██╗ ██║  ║
+║   ██╔═══╝ ██╔══██║   ██║   ██║     ██╔══██║██╔══██║██║╚██╗██║  ║
+║   ██║     ██║  ██║   ██║   ╚██████╗██║  ██║██║  ██║██║ ╚████║  ║
+║   ╚═╝     ╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝  ║
+║                                                              ║
+║              Engineering Assistant for Pi Dev               ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+      `;
+      
+      console.log(banner);
       ctx.ui.notify("Patchani persona activated", "info");
     } else {
       ctx.ui.notify("Patchani persona file not found", "warning");
