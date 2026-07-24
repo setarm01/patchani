@@ -1,8 +1,14 @@
 {
   "name": "@setarm01/patchani",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Engineering assistant for Pi Dev - structured workflows, research orchestration, and institutional memory",
-  "keywords": ["pi-package", "design-doc", "workflow", "github", "reminders"],
+  "keywords": [
+    "pi-package",
+    "design-doc",
+    "workflow",
+    "github",
+    "reminders"
+  ],
   "author": "Michelangelo Setaro",
   "license": "MIT",
   "main": "extensions/design-doc.ts",
