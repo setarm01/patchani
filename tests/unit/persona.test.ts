@@ -98,7 +98,7 @@ describe("Persona Extension", () => {
     await mockAPI._trigger("session_start", {}, mockCtx);
     
     expect(mockCtx.ui.notify).toHaveBeenCalledWith(
-      expect.stringContaining("Patchani persona"),
+      expect.stringContaining("Persona active"),
       expect.any(String)
     );
   });
