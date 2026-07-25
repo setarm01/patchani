@@ -6,9 +6,9 @@ on:
       - main
 
 jobs:
-  canonical-tests:
+  unit-and-integration:
     runs-on: ubuntu-latest
-    name: Canonical Tests
+    name: Unit and Integration Testing
     
     steps:
       - name: Checkout code
@@ -19,15 +19,15 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Run canonical tests
+      - name: Run unit and integration tests
         uses: ./.github/actions/run-canonical-tests
         with:
-          summary-message: '✅ Canonical tests passed!'
+          summary-message: '✅ Unit and integration tests passed!'
 
-  patchani-integration-test:
+  behavioral-testing:
     runs-on: ubuntu-latest
-    name: Patchani Integration Test
-    needs: canonical-tests
+    name: Behavioral Testing
+    needs: unit-and-integration
     
     steps:
       - name: Checkout code
@@ -44,7 +44,7 @@ jobs:
           npm pack
           echo "PACKAGE_FILE=$(ls *.tgz)" >> $GITHUB_ENV
 
-      - name: Test patchani installation and activation
+      - name: Test patchani behavioral execution
         uses: shaftoe/pi-coding-agent-action@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,10 +60,10 @@ jobs:
         env:
           TEST_MARKER_FILE: /tmp/patchani-test.txt
 
-      - name: Verify patchani executed successfully
+      - name: Verify behavioral test output
         run: |
           if [ ! -f "$TEST_MARKER_FILE" ]; then
-            echo "❌ Test file not created - patchani may not have loaded"
+            echo "❌ Test file not created - behavioral test failed"
             exit 1
           fi
           
@@ -73,7 +73,7 @@ jobs:
             exit 1
           fi
           
-          echo "✅ Patchani executed successfully and created test file"
+          echo "✅ Behavioral test passed: patchani executed successfully"
         env:
           TEST_MARKER_FILE: /tmp/patchani-test.txt
 
@@ -90,11 +90,11 @@ jobs:
           
           echo "✅ Patchani installed in settings"
 
-      - name: Upload test logs
+      - name: Upload behavioral test logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: patchani-integration-logs
+          name: behavioral-test-logs
           path: |
             ~/.pi/agent/sessions/**/*.jsonl
             ~/.pi/agent/settings.json
@@ -103,7 +103,7 @@ jobs:
   test-summary:
     runs-on: ubuntu-latest
     name: Test Summary
-    needs: [canonical-tests, patchani-integration-test]
+    needs: [unit-and-integration, behavioral-testing]
     if: always()
     
     steps:
@@ -114,8 +114,8 @@ jobs:
           echo "  PR to Main - Test Suite Results"
           echo "=================================="
           echo ""
-          echo "✓ Canonical Tests (unit + integration)"
-          echo "✓ Patchani Integration (install + /help)"
+          echo "✓ Unit and Integration Testing"
+          echo "✓ Behavioral Testing"
           echo ""
           echo "✅ All test suites passed!"
           echo ""

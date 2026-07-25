@@ -1,4 +1,4 @@
-name: Canonical Tests (Dev PR)
+name: PR to Dev - Unit and Integration Testing
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - dev
 
 jobs:
-  test:
+  unit-and-integration:
     runs-on: ubuntu-latest
     
     steps:
@@ -19,10 +19,10 @@ jobs:
           node-version: '20'
           enable-cache: 'true'
 
-      - name: Run canonical tests
+      - name: Run unit and integration tests
         uses: ./.github/actions/run-canonical-tests
         with:
-          summary-message: '✅ All canonical tests passed for dev PR!'
+          summary-message: '✅ Unit and integration tests passed!'
 
       - name: Upload test logs
         if: failure()
