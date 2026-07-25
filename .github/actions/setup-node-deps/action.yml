@@ -1,0 +1,39 @@
+name: 'Setup Node.js and Dependencies'
+description: 'Setup Node.js with npm caching and install dependencies using npm ci'
+author: 'patchani'
+
+inputs:
+  node-version:
+    description: 'Node.js version to use (e.g., "20", "lts/*")'
+    required: false
+    default: '20'
+  enable-cache:
+    description: 'Enable npm caching for faster builds'
+    required: false
+    default: 'true'
+  registry-url:
+    description: 'NPM registry URL (optional, for publishing workflows)'
+    required: false
+    default: ''
+  working-directory:
+    description: 'Working directory for npm ci command'
+    required: false
+    default: '.'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: ${{ inputs.enable-cache == 'true' && 'npm' || '' }}
+        registry-url: ${{ inputs.registry-url || '' }}
+    
+    - name: Install dependencies
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        echo "Installing dependencies with npm ci..."
+        npm ci --prefer-offline
+        echo "✅ Dependencies installed successfully"

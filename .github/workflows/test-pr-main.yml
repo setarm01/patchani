@@ -14,25 +14,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and dependencies
+        uses: ./.github/actions/setup-node-deps
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run unit tests
-        run: npm run test:unit
-
-      - name: Run integration tests
-        run: npm run test:smoke
-
-      - name: Summary
-        run: |
-          echo "✅ Canonical tests passed!"
-          echo "  ✓ Unit tests"
-          echo "  ✓ Integration tests"
+      - name: Run canonical tests
+        uses: ./.github/actions/run-canonical-tests
+        with:
+          summary-message: '✅ Canonical tests passed!'
 
   installation-tests:
     runs-on: ubuntu-latest
@@ -43,13 +33,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Pi environment
+        uses: ./.github/actions/setup-pi-environment
         with:
           node-version: '20'
-
-      - name: Install Pi
-        run: npm install -g @earendil-works/pi-coding-agent
 
       - name: Setup Pi test fixture
         run: bash tests/fixtures/setup-pi.sh
@@ -168,12 +155,10 @@ EOF
           echo "  ✓ Extensions load without failures"
 
       - name: Upload test logs
-        if: always()
-        uses: actions/upload-artifact@v4
+        uses: ./.github/actions/upload-test-logs
         with:
-          name: installation-test-logs
-          path: test-install/*.log
-          retention-days: 7
+          artifact-name: installation-test-logs
+          log-path: test-install/*.log
 
   activation-tests:
     runs-on: ubuntu-latest
@@ -184,13 +169,10 @@ EOF
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Pi environment
+        uses: ./.github/actions/setup-pi-environment
         with:
           node-version: '20'
-
-      - name: Install Pi
-        run: npm install -g @earendil-works/pi-coding-agent
 
       - name: Setup Pi test fixture
         run: bash tests/fixtures/setup-pi.sh
@@ -216,12 +198,10 @@ EOF
           echo "✅ Persona activation successful"
 
       - name: Upload activation logs
-        if: always()
-        uses: actions/upload-artifact@v4
+        uses: ./.github/actions/upload-test-logs
         with:
-          name: activation-test-logs
-          path: "*.log"
-          retention-days: 7
+          artifact-name: activation-test-logs
+          log-path: "*.log"
 
   behavioral-tests:
     runs-on: ubuntu-latest
@@ -232,13 +212,10 @@ EOF
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Pi environment
+        uses: ./.github/actions/setup-pi-environment
         with:
           node-version: '20'
-
-      - name: Install Pi
-        run: npm install -g @earendil-works/pi-coding-agent
 
       - name: Setup Pi test fixture
         run: bash tests/fixtures/setup-pi.sh
@@ -268,12 +245,10 @@ EOF
           echo "✅ /help command executed successfully"
 
       - name: Upload behavioral logs
-        if: always()
-        uses: actions/upload-artifact@v4
+        uses: ./.github/actions/upload-test-logs
         with:
-          name: behavioral-test-logs
-          path: "*.log"
-          retention-days: 7
+          artifact-name: behavioral-test-logs
+          log-path: "*.log"
 
   test-summary:
     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-name: Canonical Tests
+name: Canonical Tests (Dev PR)
 
 on:
   pull_request:
@@ -13,24 +13,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and dependencies
+        uses: ./.github/actions/setup-node-deps
         with:
           node-version: '20'
+          enable-cache: 'true'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Run canonical tests
+        uses: ./.github/actions/run-canonical-tests
+        with:
+          summary-message: '✅ All canonical tests passed for dev PR!'
 
-      - name: Run unit tests
-        run: npm run test:unit
-
-      - name: Run integration tests
-        run: npm run test:smoke
-
-      - name: Summary
-        run: |
-          echo "✅ All canonical tests passed!"
-          echo ""
-          echo "Ran:"
-          echo "  ✓ Unit tests (vitest)"
-          echo "  ✓ Integration tests (smoke.sh)"
+      - name: Upload test logs
+        if: failure()
+        uses: ./.github/actions/upload-test-logs
+        with:
+          artifact-name: 'test-logs-dev-pr-${{ github.run_id }}'
+          log-path: '*.log'
+          retention-days: '7'
