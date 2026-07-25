@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Behavioral Testing
     needs: unit-tests
+    if: false  # TODO: Enable when LITELLM_BASE_URL variable is configured with valid endpoint
     
     steps:
       - name: Checkout code
