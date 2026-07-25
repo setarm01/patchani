@@ -12,6 +12,10 @@ _Status: Draft_
 2. [Features](#2-features)
 3. [MCP Integrations](#3-mcp-integrations)
 4. [Open Points](#4-open-points)
+5. [Appendices](#appendices)
+   - [Appendix C: Behavioral Design & Enforcement](#appendix-c-behavioral-design--enforcement)
+   - [Appendix D: Research Workflow Architecture](#appendix-d-research-workflow-architecture)
+   - [Appendix E: Package Manifest](#appendix-e-package-manifest)
 
 ---
 
@@ -275,20 +279,6 @@ The board constrains legal moves, but strategy and tactics are yours to decide.
 3. **Deterministic** - methodology cannot be violated
 4. **Low overhead** - workflow becomes muscle memory for the LLM
 5. **Flexible** - adapts to variations (bug fix vs. feature vs. research)
-
-### Implementation Status
-
-- ✅ Persona layer (loaded on session start)
-- ✅ Workflow tools (design doc, standup sync)
-- ⏳ Enforcement gates (planned, not yet implemented)
-- ⏳ State injection (optional, for context awareness)
-
-### Future Enhancements
-
-- Minimal state injection when mid-workflow ("Design doc: OAuth, validation phase")
-- Workflow detection from natural language (auto-suggest design doc)
-- Configurable strictness (`/strict` mode for hard enforcement, relaxed by default)
-- Cross-workflow coordination (design doc → implementation → testing)
 
 ---
 
