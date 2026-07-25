@@ -1,5 +1,5 @@
 {
-  "name": "@setarm01/patchani",
+  "name": "@mksetaro/patchani",
   "version": "0.1.0",
   "description": "Engineering assistant for Pi Dev - structured workflows, research orchestration, and institutional memory",
   "keywords": [
@@ -55,5 +55,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

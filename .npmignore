@@ -1,0 +1,24 @@
+# Development files
+.github/
+tests/
+docs/
+.git/
+.gitignore
+
+# Config files
+.eslintrc*
+tsconfig.json
+vitest.config.ts
+
+# Test files
+*.test.ts
+*.spec.ts
+
+# Build artifacts
+*.log
+npm-debug.log*
+.DS_Store
+
+# Development docs
+INSTALL.md
+POST-MORTEM*.md

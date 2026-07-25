@@ -5,13 +5,13 @@
 ## Installation
 
 ```bash
-pi install git:github.com/setarm01/patchani
+pi install npm:@mksetaro/patchani
 ```
 
 Or install a specific version:
 
 ```bash
-pi install git:github.com/setarm01/patchani@v0.1.0
+pi install npm:@mksetaro/patchani@0.1.0
 ```
 
 **On first Pi startup:** Patchani persona activates automatically with welcome screen.

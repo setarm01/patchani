@@ -3,18 +3,18 @@
 ## Quick Install
 
 ```bash
-pi install git:github.com/setarm01/patchani
+pi install npm:@mksetaro/patchani
 ```
 
 That's it! Pi will automatically:
-1. Clone the repository
+1. Download the package from npm
 2. Install dependencies (including workflows)
 3. Register extensions and skills
 
 Or install a specific version:
 
 ```bash
-pi install git:github.com/setarm01/patchani@v0.1.0
+pi install npm:@mksetaro/patchani@0.1.0
 ```
 
 ## Verify Installation
@@ -52,19 +52,19 @@ If patchani extensions don't appear:
    pi list
    ```
 
-3. Check the cloned repository exists:
+3. Check the installed package:
    ```bash
-   ls -la ~/.pi/agent/git/github.com/setarm01/patchani/
+   ls -la ~/.pi/agent/npm/node_modules/@mksetaro/patchani/
    ```
 
 4. Verify dependencies were installed:
    ```bash
-   ls -la ~/.pi/agent/git/github.com/setarm01/patchani/node_modules/@quintinshaw/
+   ls -la ~/.pi/agent/npm/node_modules/@mksetaro/patchani/node_modules/@quintinshaw/
    ```
 
-5. If dependencies are missing, reinstall them:
+5. If dependencies are missing, reinstall:
    ```bash
-   cd ~/.pi/agent/git/github.com/setarm01/patchani/
+   cd ~/.pi/agent/npm/node_modules/@mksetaro/patchani/
    npm install
    ```
 
@@ -83,7 +83,7 @@ All your `.ts` files should still be there. Patchani installation should NOT aff
 ## Uninstall
 
 ```bash
-pi remove git:github.com/setarm01/patchani
+pi remove npm:@mksetaro/patchani
 ```
 
-This removes patchani and its dependencies from the cloned package directory.
+This removes patchani and its dependencies from the npm cache.
