@@ -1,26 +1,15 @@
 # Installation Guide
 
-## Prerequisites
-
-Patchani requires the Pi Dynamic Workflows package. Install it first:
-
-```bash
-pi install npm:@quintinshaw/pi-dynamic-workflows
-```
-
-Verify it's installed:
-
-```bash
-pi list
-```
-
-You should see `npm:@quintinshaw/pi-dynamic-workflows` in the packages list.
-
-## Install Patchani
+## Quick Install
 
 ```bash
 pi install git:github.com/setarm01/patchani
 ```
+
+That's it! Pi will automatically:
+1. Clone the repository
+2. Install dependencies (including workflows)
+3. Register extensions and skills
 
 Or install a specific version:
 
@@ -68,20 +57,16 @@ If patchani extensions don't appear:
    ls -la ~/.pi/agent/git/github.com/setarm01/patchani/
    ```
 
-4. Verify workflows package is installed:
+4. Verify dependencies were installed:
    ```bash
-   pi list | grep workflows
+   ls -la ~/.pi/agent/git/github.com/setarm01/patchani/node_modules/@quintinshaw/
    ```
 
-### Missing Workflows Package
-
-If you see a warning about missing prerequisites:
-
-```bash
-pi install npm:@quintinshaw/pi-dynamic-workflows
-```
-
-Then restart Pi.
+5. If dependencies are missing, reinstall them:
+   ```bash
+   cd ~/.pi/agent/git/github.com/setarm01/patchani/
+   npm install
+   ```
 
 ### Existing Extensions Disappeared
 
@@ -93,16 +78,7 @@ If extensions are missing, check:
 ls -la ~/.pi/agent/extensions/
 ```
 
-All your `.ts` files should still be there. If they are but not loading, your `settings.json` might have been corrupted. You can restore by manually editing:
-
-```json
-{
-  "packages": [
-    "npm:@quintinshaw/pi-dynamic-workflows",
-    "git:github.com/setarm01/patchani"
-  ]
-}
-```
+All your `.ts` files should still be there. Patchani installation should NOT affect existing extensions.
 
 ## Uninstall
 
@@ -110,10 +86,4 @@ All your `.ts` files should still be there. If they are but not loading, your `s
 pi remove git:github.com/setarm01/patchani
 ```
 
-This removes patchani but keeps the workflows package (other packages might use it).
-
-To remove workflows too:
-
-```bash
-pi remove npm:@quintinshaw/pi-dynamic-workflows
-```
+This removes patchani and its dependencies from the cloned package directory.

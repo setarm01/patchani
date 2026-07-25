@@ -12,8 +12,9 @@
   "author": "Michelangelo Setaro",
   "license": "MIT",
   "main": "extensions/design-doc.ts",
-  "dependencies": {},
-  "patchani_comment": "workflows is a peerDependency - users must install it separately",
+  "dependencies": {
+    "@quintinshaw/pi-dynamic-workflows": "^3.4.1"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^3.0.0",
     "@types/node": "^20.0.0",
@@ -24,18 +25,19 @@
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
-    "@quintinshaw/pi-dynamic-workflows": "^3.4.1",
     "typebox": "*"
   },
-
   "pi": {
     "extensions": [
       "extensions/persona.ts",
       "extensions/enforcement.ts",
       "extensions/design-doc.ts",
-      "extensions/standup-sync.ts"
+      "extensions/standup-sync.ts",
+      "node_modules/@quintinshaw/pi-dynamic-workflows/extensions"
     ],
-    "skills": []
+    "skills": [
+      "node_modules/@quintinshaw/pi-dynamic-workflows/skills"
+    ]
   },
   "scripts": {
     "test": "npm run test:unit && npm run test:smoke",
@@ -45,7 +47,7 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint extensions/**/*.ts",
     "typecheck": "tsc --noEmit",
-    "postinstall": "node scripts/check-prerequisites.js || true"
+    "postinstall": "node scripts/postinstall.js || true"
   },
   "repository": {
     "type": "git",
