@@ -4,6 +4,16 @@
 
 ## Installation
 
+### Prerequisites
+
+Patchani requires the workflows package:
+
+```bash
+pi install npm:@quintinshaw/pi-dynamic-workflows
+```
+
+### Install Patchani
+
 ```bash
 pi install git:github.com/setarm01/patchani
 ```
