@@ -56,9 +56,26 @@ jobs:
             npm:pi-provider-litellm
             ./${{ env.PACKAGE_FILE }}
           prompt: |
-            Test that patchani is loaded by running /help command.
-            Verify that patchani extensions and commands are available.
-            Report success if everything loads without errors.
+            Create a file at /tmp/patchani-test.txt and write "WE WE SHUSHU" in it.
+        env:
+          TEST_MARKER_FILE: /tmp/patchani-test.txt
+
+      - name: Verify patchani executed successfully
+        run: |
+          if [ ! -f "$TEST_MARKER_FILE" ]; then
+            echo "❌ Test file not created - patchani may not have loaded"
+            exit 1
+          fi
+          
+          CONTENT=$(cat "$TEST_MARKER_FILE")
+          if [ "$CONTENT" != "WE WE SHUSHU" ]; then
+            echo "❌ Test file content incorrect: $CONTENT"
+            exit 1
+          fi
+          
+          echo "✅ Patchani executed successfully and created test file"
+        env:
+          TEST_MARKER_FILE: /tmp/patchani-test.txt
 
       - name: Verify patchani in settings
         run: |
