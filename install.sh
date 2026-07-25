@@ -23,11 +23,33 @@ if ! command -v gh &> /dev/null; then
     echo ""
 fi
 
-# Configure npm for GitHub Packages
-echo "📦 Configuring npm for GitHub Packages..."
-if [ ! -f ~/.npmrc ] || ! grep -q "@setarm01:registry" ~/.npmrc; then
+# Check if GitHub token is configured
+if [ ! -f ~/.npmrc ] || ! grep -q "//npm.pkg.github.com/:_authToken" ~/.npmrc; then
+    echo "📝 GitHub Packages requires authentication (even for public packages)"
+    echo ""
+    echo "   Create a token: https://github.com/settings/tokens/new"
+    echo "   Required scope: read:packages"
+    echo ""
+    read -p "   Enter your GitHub token (or press Enter to skip): " TOKEN
+    echo ""
+    
+    if [ -z "$TOKEN" ]; then
+        echo "⚠️  Skipping token setup. You'll need to configure ~/.npmrc manually:"
+        echo "   echo '//npm.pkg.github.com/:_authToken=YOUR_TOKEN' >> ~/.npmrc"
+        echo "   echo '@setarm01:registry=https://npm.pkg.github.com' >> ~/.npmrc"
+        exit 1
+    fi
+    
+    # Configure npm
+    echo "//npm.pkg.github.com/:_authToken=$TOKEN" >> ~/.npmrc
     echo "@setarm01:registry=https://npm.pkg.github.com" >> ~/.npmrc
-    echo "   Added @setarm01 scope to ~/.npmrc"
+    echo "   ✓ Token configured in ~/.npmrc"
+else
+    # Just add scope if not present
+    if ! grep -q "@setarm01:registry" ~/.npmrc; then
+        echo "@setarm01:registry=https://npm.pkg.github.com" >> ~/.npmrc
+        echo "   ✓ Added @setarm01 scope to ~/.npmrc"
+    fi
 fi
 
 # Install via pi
