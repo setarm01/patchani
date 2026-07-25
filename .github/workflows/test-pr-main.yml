@@ -45,6 +45,8 @@ jobs:
           model: mock-gpt-4o
           token: ${{ secrets.LITELLM_API_KEY }}
           base_url: ${{ vars.LITELLM_BASE_URL }}
+          extensions: |
+            npm:pi-provider-litellm
           task: |
             # Install patchani from current directory
             pi install .
