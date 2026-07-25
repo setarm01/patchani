@@ -36,15 +36,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Build and extract npm package
+      - name: Build npm package
         run: |
           npm ci
           npm pack
-          mkdir -p /tmp/patchani-pkg
-          tar -xzf mksetaro-patchani-*.tgz -C /tmp/patchani-pkg --strip-components=1
-          cd /tmp/patchani-pkg
-          npm ci --production
-          echo "PACKAGE_PATH=/tmp/patchani-pkg" >> $GITHUB_ENV
+          echo "PACKAGE_FILE=$(pwd)/$(ls mksetaro-patchani-*.tgz)" >> $GITHUB_ENV
 
       - name: Test patchani behavioral execution
         uses: shaftoe/pi-coding-agent-action@v2
@@ -54,7 +50,7 @@ jobs:
           model: mock-gpt-4o
           token: ${{ secrets.LITELLM_API_KEY }}
           base_url: ${{ vars.LITELLM_BASE_URL }}  # Your LiteLLM server URL
-          extensions: ${{ env.PACKAGE_PATH }}
+          extensions: npm:@mksetaro/patchani@file:${{ env.PACKAGE_FILE }}
           prompt: |
             Create a file at /tmp/patchani-test.txt and write "WE WE SHUSHU" in it.
         env:
