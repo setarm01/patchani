@@ -36,4 +36,3 @@ runs:
       run: |
         echo "Installing dependencies with npm ci..."
         npm ci --prefer-offline
-        echo "✅ Dependencies installed successfully"
