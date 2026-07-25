@@ -199,7 +199,100 @@ Bundled dependencies automatically installed. No manual configuration required.
 
 ---
 
-## Appendix A: Research Workflow Architecture
+## Appendix C: Behavioral Design & Enforcement
+
+### Philosophy
+
+Patchani distills engineering methodology into an extension that feels like working with an assistant, not a command palette. The goal: reduce mental overhead by encoding discipline and workflow into the tool itself.
+
+### Three-Layer Architecture
+
+**Layer 1: Persona (Soft Guidance)**
+- Loaded as system prompt injection on session start
+- Defines communication style, tone, and approach
+- Sets behavioral expectations: ask before acting, raise doubts, fact-check claims
+- LLM can interpret flexibly - guides "what good looks like"
+
+**Layer 2: Workflow Tools (Structured Process)**
+- Tools like `design_doc_start`, `design_doc_validate`, etc.
+- LLM calls them naturally during conversation
+- No `/commands` needed - just talk about what you want to do
+- LLM decides when to use tools based on context and persona
+
+**Layer 3: Enforcement Gates (Hard Boundaries)**
+- Extensions intercept tool calls via `tool_call` event
+- Check workflow state before allowing execution
+- Block violations: "Must complete validation before writing sections"
+- Deterministic - LLM cannot bypass, learns from error messages
+
+### How It Feels In Practice
+
+**User:** "Let's add OAuth authentication"
+
+**Patchani:** "Should we start a design doc for this?" *(persona guides)*
+
+**User:** "Yes"
+
+**Patchani:** *calls `design_doc_start` naturally* *(workflow tool)*
+
+**Patchani:** "Let me ask intake questions..." *(follows persona directive)*
+
+*Later...*
+
+**Patchani:** "Now I'll implement—" *tries to call `write` tool*
+
+**Extension:** ❌ Blocked - "Complete design doc validation first" *(enforcement gate)*
+
+**Patchani:** "You're right, let me validate the design first" *(self-corrects)*
+
+### What's Constrained vs. Free
+
+**Constrained (Enforcement):**
+- Workflow step ordering (can't skip intake → validation → implementation)
+- Tool availability (design doc tools only active when in design doc session)
+- File operations (block implementation before design doc exists)
+
+**Free (LLM Reasoning):**
+- How to discuss trade-offs
+- What questions to ask
+- Which architecture to propose
+- How to break down work
+- Communication style and tone
+
+### Analogy
+
+Think of it like chess:
+- **Persona** = coaching on good strategy
+- **Tools** = pieces you can move
+- **Enforcement** = rules of legal moves
+
+The board constrains legal moves, but strategy and tactics are yours to decide.
+
+### Benefits
+
+1. **Feels natural** - conversation-driven, not command-driven
+2. **Self-correcting** - LLM learns workflow from error messages
+3. **Deterministic** - methodology cannot be violated
+4. **Low overhead** - workflow becomes muscle memory for the LLM
+5. **Flexible** - adapts to variations (bug fix vs. feature vs. research)
+
+### Implementation Status
+
+- ✅ Persona layer (loaded on session start)
+- ✅ Workflow tools (design doc, standup sync)
+- ⏳ Enforcement gates (planned, not yet implemented)
+- ⏳ State injection (optional, for context awareness)
+
+### Future Enhancements
+
+- Minimal state injection when mid-workflow ("Design doc: OAuth, validation phase")
+- Workflow detection from natural language (auto-suggest design doc)
+- Configurable strictness (`/strict` mode for hard enforcement, relaxed by default)
+- Cross-workflow coordination (design doc → implementation → testing)
+
+---
+
+## Appendix D: Research Workflow Architecture
 
 ### Design-Doc Research Flow
 
@@ -300,7 +393,7 @@ const webFindings = await workflow('deep-research', {
 
 ---
 
-## Appendix B: Package Manifest
+## Appendix E: Package Manifest
 
 ```json
 {
