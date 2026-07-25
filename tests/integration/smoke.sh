@@ -19,6 +19,35 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 cd "$PROJECT_ROOT"
 
+# Check if pi is available
+if ! command -v pi &>/dev/null; then
+  echo -e "${YELLOW}⚠️  Pi not installed - skipping extension loading tests${NC}"
+  echo -e "${YELLOW}   (Extension loading will be tested via pi-action in CI)${NC}"
+  echo ""
+  echo "📂 Checking files exist..."
+  
+  # Just verify files exist
+  for ext in persona.ts design-doc.ts enforcement.ts standup-sync.ts; do
+    if [ -f "extensions/$ext" ]; then
+      echo -e "  ✓ extensions/$ext ${GREEN}EXISTS${NC}"
+    else
+      echo -e "  ✗ extensions/$ext ${RED}MISSING${NC}"
+      exit 1
+    fi
+  done
+  
+  if [ -f "$PROJECT_ROOT/persona/patchani.md" ]; then
+    echo -e "  ✓ persona/patchani.md ${GREEN}EXISTS${NC}"
+  else
+    echo -e "  ✗ persona/patchani.md ${RED}MISSING${NC}"
+    exit 1
+  fi
+  
+  echo ""
+  echo -e "${GREEN}✅ File checks passed!${NC}"
+  exit 0
+fi
+
 echo ""
 echo "📦 Loading extensions..."
 
