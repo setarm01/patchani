@@ -49,7 +49,7 @@ jobs:
           provider: openai  # Use OpenAI-compatible mode for LiteLLM
           model: mock-gpt-4o
           token: ${{ secrets.LITELLM_API_KEY }}
-          base_url: ${{ vars.LITELLM_BASE_URL }}  # Your LiteLLM server URL
+          base_url: ${{ secrets.LITELLM_BASE_URL }}  # Your LiteLLM server URL (secret, not variable)
           extensions: npm:@mksetaro/patchani@file:${{ env.PACKAGE_FILE }}
           prompt: |
             Create a file at /tmp/patchani-test.txt and write "WE WE SHUSHU" in it.
