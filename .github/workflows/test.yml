@@ -1,42 +1,72 @@
-name: Tests
+name: Post-Merge CI
+
+# This workflow runs after code is merged to main.
+# It performs comprehensive quality checks and uploads coverage.
+# For PR validation, see test-pr-main.yml
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
-  test:
+  post-merge-validation:
+    name: Post-Merge Validation
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js and Dependencies
+        uses: ./.github/actions/setup-node-deps
         with:
-          node-version: 'lts/*'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
+          node-version: '20'
       
       - name: Type check
-        run: npm run typecheck
+        run: |
+          echo "Running TypeScript type checking..."
+          npm run typecheck
+          echo "✅ Type checking passed"
       
       - name: Lint
-        run: npm run lint
+        run: |
+          echo "Running ESLint..."
+          npm run lint
+          echo "✅ Linting passed"
       
-      - name: Run unit tests
-        run: npm run test:unit
+      - name: Run Canonical Tests
+        uses: ./.github/actions/run-canonical-tests
+        with:
+          summary-message: '✅ Post-merge tests passed!'
       
-      - name: Run smoke tests
-        run: npm run test:smoke
+      - name: Generate coverage report
+        run: |
+          echo "Generating test coverage..."
+          npm run test:coverage
+          echo "✅ Coverage report generated"
       
-      - name: Upload coverage
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage-final.json
+          flags: post-merge
+          name: post-merge-coverage
+      
+      - name: Summary
+        if: success()
+        run: |
+          echo ""
+          echo "========================================"
+          echo "  Post-Merge CI - All Checks Passed! ✅"
+          echo "========================================"
+          echo ""
+          echo "Completed checks:"
+          echo "  ✓ TypeScript type checking"
+          echo "  ✓ ESLint code quality"
+          echo "  ✓ Unit tests (vitest)"
+          echo "  ✓ Integration tests (smoke)"
+          echo "  ✓ Coverage uploaded to Codecov"
+          echo ""
+          echo "Main branch is healthy! 🎉"

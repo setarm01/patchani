@@ -1,0 +1,41 @@
+name: 'Run Canonical Tests'
+description: 'Execute standard unit tests and smoke/integration tests with summary output'
+author: 'patchani'
+
+inputs:
+  summary-message:
+    description: 'Custom summary message to display after tests complete'
+    required: false
+    default: '✅ Canonical tests passed!'
+
+outputs:
+  unit-result:
+    description: 'Unit test exit code (0 = success)'
+    value: ${{ steps.unit.outputs.result }}
+  integration-result:
+    description: 'Integration test exit code (0 = success)'
+    value: ${{ steps.integration.outputs.result }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run unit tests
+      id: unit
+      shell: bash
+      run: |
+        npm run test:unit
+        echo "result=$?" >> $GITHUB_OUTPUT
+    
+    - name: Run integration tests
+      id: integration
+      shell: bash
+      run: |
+        npm run test:smoke
+        echo "result=$?" >> $GITHUB_OUTPUT
+    
+    - name: Display summary
+      shell: bash
+      run: |
+        echo "${{ inputs.summary-message }}"
+        echo "  ✓ Unit tests"
+        echo "  ✓ Integration tests"
