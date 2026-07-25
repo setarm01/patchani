@@ -38,24 +38,27 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Build npm package
+        run: |
+          npm ci
+          npm pack
+          echo "PACKAGE_FILE=$(ls *.tgz)" >> $GITHUB_ENV
+
       - name: Test patchani installation and activation
         uses: shaftoe/pi-coding-agent-action@v2
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           provider: litellm
           model: mock-gpt-4o
           token: ${{ secrets.LITELLM_API_KEY }}
           base_url: ${{ vars.LITELLM_BASE_URL }}
           extensions: |
             npm:pi-provider-litellm
-          task: |
-            # Install patchani from current directory
-            pi install .
-            
-            # Test /help command
-            /help
-            
-            # If we got here, patchani loaded successfully
-            echo "✅ Patchani installed and /help executed successfully"
+            ./${{ env.PACKAGE_FILE }}
+          prompt: |
+            Test that patchani is loaded by running /help command.
+            Verify that patchani extensions and commands are available.
+            Report success if everything loads without errors.
 
       - name: Verify patchani in settings
         run: |
