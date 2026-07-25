@@ -26,15 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Behavioral Testing
     needs: unit-tests
-    # Disabled until LiteLLM endpoint is properly configured
-    # To enable:
-    #   1. Set LITELLM_BASE_URL to your LiteLLM server URL
-    #      (e.g., https://litellm.your-domain.com)
-    #   2. Set LITELLM_API_KEY secret to your LiteLLM API key
-    #      (same key you use with /litellm login)
-    #   3. Ensure mock-gpt-4o model exists in your LiteLLM config
-    #   4. Change 'if: false' to 'if: true' below
-    if: false
     
     steps:
       - name: Checkout code
