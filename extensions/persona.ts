@@ -58,7 +58,7 @@ export default function (pi: ExtensionAPI) {
       if (ctx.mode === "tui") {
         const { Text, Box } = await import("@earendil-works/pi-tui");
         
-        await ctx.ui.custom((tui) => {
+        await ctx.ui.custom((tui, theme, keybindings, done) => {
           const width = 60;
           const lines = [
             "",
@@ -66,9 +66,9 @@ export default function (pi: ExtensionAPI) {
             "",
             chalk.dim("  Engineering Assistant for Pi Dev"),
             "",
-            chalk.dim("  \u2022 Design documents with research workflows"),
-            chalk.dim("  \u2022 GitHub \u2192 Apple Reminders sync"),
-            chalk.dim("  \u2022 Structured planning & execution"),
+            chalk.dim("  • Design documents with research workflows"),
+            chalk.dim("  • GitHub → Apple Reminders sync"),
+            chalk.dim("  • Structured planning & execution"),
             "",
             chalk.dim.italic("  Press any key to continue..."),
             ""
@@ -84,8 +84,10 @@ export default function (pi: ExtensionAPI) {
           );
           
           return {
-            render: () => box,
+            render: (w: number) => box.render(w),
+            invalidate: () => {},
             handleKey: () => {
+              done(null);
               return { close: true };
             }
           };

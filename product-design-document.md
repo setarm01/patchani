@@ -10,12 +10,12 @@ _Status: Draft_
 
 1. [Vision](#1-vision)
 2. [Features](#2-features)
-3. [MCP Integrations](#3-mcp-integrations)
-4. [Open Points](#4-open-points)
-5. [Appendices](#appendices)
+3. [Package Dependenciess](#3-package-dependencies)
+4. [External Integrations](#4-external-integrations)
+5. [Open Points](#5-open-points)
+6. [Appendix](#6-appendix)
    - [Appendix C: Behavioral Design & Enforcement](#appendix-c-behavioral-design--enforcement)
    - [Appendix D: Research Workflow Architecture](#appendix-d-research-workflow-architecture)
-   - [Appendix E: Package Manifest](#appendix-e-package-manifest)
 
 ---
 
@@ -203,13 +203,15 @@ Bundled dependencies automatically installed. No manual configuration required.
 
 ---
 
-## Appendix C: Behavioral Design & Enforcement
+## 6. Appendix
 
-### Philosophy
+### Appendix C: Behavioral Design & Enforcement
+
+#### Philosophy
 
 Patchani distills engineering methodology into an extension that feels like working with an assistant, not a command palette. The goal: reduce mental overhead by encoding discipline and workflow into the tool itself.
 
-### Three-Layer Architecture
+#### Three-Layer Architecture
 
 **Layer 1: Persona (Soft Guidance)**
 - Loaded as system prompt injection on session start
@@ -229,7 +231,7 @@ Patchani distills engineering methodology into an extension that feels like work
 - Block violations: "Must complete validation before writing sections"
 - Deterministic - LLM cannot bypass, learns from error messages
 
-### How It Feels In Practice
+#### How It Feels In Practice
 
 **User:** "Let's add OAuth authentication"
 
@@ -249,7 +251,7 @@ Patchani distills engineering methodology into an extension that feels like work
 
 **Patchani:** "You're right, let me validate the design first" *(self-corrects)*
 
-### What's Constrained vs. Free
+#### What's Constrained vs. Free
 
 **Constrained (Enforcement):**
 - Workflow step ordering (can't skip intake → validation → implementation)
@@ -263,7 +265,7 @@ Patchani distills engineering methodology into an extension that feels like work
 - How to break down work
 - Communication style and tone
 
-### Analogy
+#### Analogy
 
 Think of it like chess:
 - **Persona** = coaching on good strategy
@@ -272,7 +274,7 @@ Think of it like chess:
 
 The board constrains legal moves, but strategy and tactics are yours to decide.
 
-### Benefits
+#### Benefits
 
 1. **Feels natural** - conversation-driven, not command-driven
 2. **Self-correcting** - LLM learns workflow from error messages
@@ -282,9 +284,9 @@ The board constrains legal moves, but strategy and tactics are yours to decide.
 
 ---
 
-## Appendix D: Research Workflow Architecture
+### Appendix D: Research Workflow Architecture
 
-### Design-Doc Research Flow
+#### Design-Doc Research Flow
 
 **User Experience:**
 ```
@@ -303,7 +305,7 @@ Research completes → Background section generated
 Design-doc: Asks user to review section
 ```
 
-### Research Workflow Strategy
+#### Research Workflow Strategy
 
 **Principle:** Parallelized, narrow-scoped agents (small context) with synthesis.
 
@@ -345,7 +347,7 @@ Format: Current state, Known limitations, Team decisions`)
 
 **Result:** ~50K total tokens vs. 150K+ in single serial agent.
 
-### Web Search Quality Targets
+#### Web Search Quality Targets
 
 **Prioritize:**
 - Official documentation (OAuth.net, OWASP, W3C, MDN)
@@ -366,7 +368,7 @@ Format: Current state, Known limitations, Team decisions`)
 "authentication security 2026" site:*.edu OR site:arxiv.org
 ```
 
-### Nested Workflow Support
+#### Nested Workflow Support
 
 **Pattern:**
 ```javascript
@@ -381,33 +383,7 @@ const webFindings = await workflow('deep-research', {
 - Nested workflow shares parent budget and concurrency
 - Useful for specialized sub-tasks (web research, code review)
 
----
-
-## Appendix E: Package Manifest
-
-```json
-{
-  "name": "@setarm01/patchani",
-  "version": "1.0.0",
-  "keywords": ["pi-package"],
-  "dependencies": {
-    "@quintinshaw/pi-dynamic-workflows": "^3.4.1"
-  },
-  "bundledDependencies": ["@quintinshaw/pi-dynamic-workflows"],
-  "pi": {
-    "extensions": [
-      "extensions/design-doc.ts",
-      "extensions/standup-sync.ts",
-      "node_modules/@quintinshaw/pi-dynamic-workflows/extensions"
-    ],
-    "skills": [
-      "node_modules/@quintinshaw/pi-dynamic-workflows/skills"
-    ]
-  }
-}
-```
-
-### Model Tier Strategy
+#### Model Tier Strategy
 
 **pi-dynamic-workflows supports per-agent model selection** via tiers or explicit models.
 

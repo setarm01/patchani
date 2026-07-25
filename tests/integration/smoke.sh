@@ -40,7 +40,16 @@ else
   exit 1
 fi
 
-# Test 3: Load standup-sync extension
+# Test 3: Load enforcement extension
+echo -n "  ✓ enforcement.ts ... "
+if pi -e extensions/enforcement.ts --help &>/dev/null; then
+  echo -e "${GREEN}PASS${NC}"
+else
+  echo -e "${RED}FAIL${NC}"
+  exit 1
+fi
+
+# Test 4: Load standup-sync extension
 echo -n "  ✓ standup-sync.ts ... "
 if pi -e extensions/standup-sync.ts --help &>/dev/null; then
   echo -e "${GREEN}PASS${NC}"
@@ -49,9 +58,10 @@ else
   exit 1
 fi
 
-# Test 4: Load all extensions together
+# Test 5: Load all extensions together
 echo -n "  ✓ all extensions ... "
 if pi -e extensions/persona.ts \
+      -e extensions/enforcement.ts \
       -e extensions/design-doc.ts \
       -e extensions/standup-sync.ts \
       --help &>/dev/null; then
