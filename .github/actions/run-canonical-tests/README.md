@@ -1,6 +1,6 @@
-# Run Canonical Tests
+# Run Unit Tests
 
-Runs unit tests (`npm run test:unit`) and integration tests (`npm run test:smoke`).
+Runs unit tests (`npm test`).
 
 ## Usage
 
@@ -8,4 +8,6 @@ Runs unit tests (`npm run test:unit`) and integration tests (`npm run test:smoke
 - uses: ./.github/actions/run-canonical-tests
 ```
 
-Tests fail if either command exits non-zero.
+Tests fail if command exits non-zero.
+
+Note: Behavioral/integration testing is done separately via pi-action in test-pr-main.yml.

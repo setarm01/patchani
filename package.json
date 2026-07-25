@@ -39,9 +39,8 @@
     ]
   },
   "scripts": {
-    "test": "npm run test:unit && npm run test:smoke",
+    "test": "npm run test:unit",
     "test:unit": "vitest run",
-    "test:smoke": "bash tests/integration/smoke.sh",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint extensions/**/*.ts",

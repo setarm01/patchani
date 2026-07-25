@@ -6,9 +6,9 @@ on:
       - main
 
 jobs:
-  unit-and-integration:
+  unit-tests:
     runs-on: ubuntu-latest
-    name: Unit and Integration Testing
+    name: Unit Tests
     
     steps:
       - name: Checkout code
@@ -19,13 +19,13 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Run unit and integration tests
+      - name: Run unit tests
         uses: ./.github/actions/run-canonical-tests
 
   behavioral-testing:
     runs-on: ubuntu-latest
     name: Behavioral Testing
-    needs: unit-and-integration
+    needs: unit-tests
     
     steps:
       - name: Checkout code

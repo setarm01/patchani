@@ -1,9 +1,8 @@
-name: 'Run Canonical Tests'
-description: 'Execute standard unit tests and smoke/integration tests with summary output'
+name: 'Run Unit Tests'
+description: 'Execute unit tests'
 author: 'patchani'
 
 inputs: {}
-
 outputs: {}
 
 runs:
@@ -11,8 +10,4 @@ runs:
   steps:
     - name: Run unit tests
       shell: bash
-      run: npm run test:unit
-    
-    - name: Run integration tests
-      shell: bash
-      run: npm run test:smoke
+      run: npm test

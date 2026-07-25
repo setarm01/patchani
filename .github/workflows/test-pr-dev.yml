@@ -1,4 +1,4 @@
-name: PR to Dev - Unit and Integration Testing
+name: PR to Dev - Unit Tests
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - dev
 
 jobs:
-  unit-and-integration:
+  unit-tests:
     runs-on: ubuntu-latest
     
     steps:
@@ -19,7 +19,7 @@ jobs:
           node-version: '20'
           enable-cache: 'true'
 
-      - name: Run unit and integration tests
+      - name: Run unit tests
         uses: ./.github/actions/run-canonical-tests
 
       - name: Upload test logs
