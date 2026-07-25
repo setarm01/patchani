@@ -21,8 +21,6 @@ jobs:
 
       - name: Run unit and integration tests
         uses: ./.github/actions/run-canonical-tests
-        with:
-          summary-message: '✅ Unit and integration tests passed!'
 
   behavioral-testing:
     runs-on: ubuntu-latest
@@ -99,24 +97,3 @@ jobs:
             ~/.pi/agent/sessions/**/*.jsonl
             ~/.pi/agent/settings.json
           retention-days: 7
-
-  test-summary:
-    runs-on: ubuntu-latest
-    name: Test Summary
-    needs: [unit-and-integration, behavioral-testing]
-    if: always()
-    
-    steps:
-      - name: Report Results
-        run: |
-          echo ""
-          echo "=================================="
-          echo "  PR to Main - Test Suite Results"
-          echo "=================================="
-          echo ""
-          echo "✓ Unit and Integration Testing"
-          echo "✓ Behavioral Testing"
-          echo ""
-          echo "✅ All test suites passed!"
-          echo ""
-          echo "Ready to merge to main."

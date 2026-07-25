@@ -21,8 +21,6 @@ jobs:
 
       - name: Run unit and integration tests
         uses: ./.github/actions/run-canonical-tests
-        with:
-          summary-message: '✅ Unit and integration tests passed!'
 
       - name: Upload test logs
         if: failure()
