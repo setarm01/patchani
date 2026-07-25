@@ -39,22 +39,21 @@ jobs:
           node-version: '20'
 
       - name: Test patchani installation and activation
-        uses: cv/pi-action@v1
+        uses: shaftoe/pi-coding-agent-action@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Install patchani package from current checkout
+          provider: litellm
+          model: mock-gpt-4o
+          token: ${{ secrets.LITELLM_API_KEY }}
+          base_url: ${{ vars.LITELLM_BASE_URL }}
           task: |
             # Install patchani from current directory
             pi install .
             
             # Test /help command
-            echo "/help" | pi
+            /help
             
             # If we got here, patchani loaded successfully
             echo "✅ Patchani installed and /help executed successfully"
-        env:
-          LITELLM_BASE_URL: ${{ vars.LITELLM_BASE_URL }}
-          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
 
       - name: Verify patchani in settings
         run: |
