@@ -42,6 +42,8 @@ jobs:
           npm pack
           mkdir -p /tmp/patchani-pkg
           tar -xzf mksetaro-patchani-*.tgz -C /tmp/patchani-pkg --strip-components=1
+          cd /tmp/patchani-pkg
+          npm ci --production
           echo "PACKAGE_PATH=/tmp/patchani-pkg" >> $GITHUB_ENV
 
       - name: Test patchani behavioral execution
