@@ -49,9 +49,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint extensions/**/*.ts",
-    "typecheck": "tsc --noEmit",
-    "preinstall": "echo 'Installing Patchani with bundled dependencies...'",
-    "postinstall": "echo 'Patchani installed successfully! Use: pi install npm:@setarm01/patchani'"
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
