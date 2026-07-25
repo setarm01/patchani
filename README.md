@@ -4,16 +4,7 @@
 
 ## Installation
 
-**One-line install:**
-
 ```bash
-curl -fsSL https://raw.githubusercontent.com/setarm01/patchani/main/install.sh | bash
-```
-
-Or manually:
-
-```bash
-echo "@setarm01:registry=https://npm.pkg.github.com" >> ~/.npmrc
 pi install npm:@setarm01/patchani
 ```
 
