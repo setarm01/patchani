@@ -1,0 +1,13 @@
+name: 'Run Unit Tests'
+description: 'Execute unit tests'
+author: 'patchani'
+
+inputs: {}
+outputs: {}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run unit tests
+      shell: bash
+      run: npm test
