@@ -5,6 +5,11 @@
  * Verifies installation and provides helpful information
  */
 
+// Skip in CI environments
+if (process.env.CI) {
+  process.exit(0);
+}
+
 const fs = require('fs');
 const path = require('path');
 
