@@ -26,7 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Behavioral Testing
     needs: unit-tests
-    if: false  # TODO: Enable when LITELLM_BASE_URL variable is configured with valid endpoint
+    # Disabled until LiteLLM endpoint is properly configured
+    # Re-enable by changing 'if: false' to 'if: true'
+    if: false
     
     steps:
       - name: Checkout code
@@ -49,13 +51,11 @@ jobs:
         uses: shaftoe/pi-coding-agent-action@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          provider: litellm
+          provider: openai
           model: mock-gpt-4o
           token: ${{ secrets.LITELLM_API_KEY }}
           base_url: ${{ vars.LITELLM_BASE_URL }}
-          extensions: |
-            npm:pi-provider-litellm
-            ${{ env.PACKAGE_PATH }}
+          extensions: ${{ env.PACKAGE_PATH }}
           prompt: |
             Create a file at /tmp/patchani-test.txt and write "WE WE SHUSHU" in it.
         env:
