@@ -1,6 +1,6 @@
 {
   "name": "patchani",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Engineering assistant for Pi - structured workflows, research orchestration, and institutional memory",
   "keywords": [
     "pi-package",
