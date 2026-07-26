@@ -1,7 +1,7 @@
 {
   "name": "patchani",
   "version": "0.1.1",
-  "description": "Engineering assistant for Pi Dev - structured workflows, research orchestration, and institutional memory",
+  "description": "Engineering assistant for Pi - structured workflows, research orchestration, and institutional memory",
   "keywords": [
     "pi-package",
     "design-doc",
