@@ -4,6 +4,7 @@ tests/
 docs/
 .git/
 .gitignore
+.pi/
 
 # Config files
 .eslintrc*
