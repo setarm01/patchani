@@ -65,7 +65,7 @@ jobs:
 
       - name: Publish
         if: steps.check-tag.outputs.exists == 'false'
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -89,5 +89,5 @@ jobs:
             ## Installation
             
             ```bash
-            pi install npm:@mksetaro/patchani@${{ steps.version.outputs.version }}
+            pi install npm:patchani@${{ steps.version.outputs.version }}
             ```

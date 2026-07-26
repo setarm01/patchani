@@ -27,7 +27,7 @@ The goal is not a chatbot wrapper — it is a working partner that applies disci
 
 ### Implementation Strategy
 
-Implemented as a Pi package (`@setarm01/patchani`) containing multiple extensions and skills. Uses Pi's native extension API for programmatic workflow enforcement, session lifecycle hooks, and custom tool registration. GitHub integration via custom tools for token efficiency. Apple Reminders via AppleScript tools.
+Implemented as a Pi package (`patchani`) containing multiple extensions and skills. Uses Pi's native extension API for programmatic workflow enforcement, session lifecycle hooks, and custom tool registration. GitHub integration via custom tools for token efficiency. Apple Reminders via AppleScript tools.
 
 ---
 

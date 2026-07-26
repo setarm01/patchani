@@ -1,7 +1,7 @@
 {
-  "name": "@mksetaro/patchani",
-  "version": "0.1.0",
-  "description": "Engineering assistant for Pi Dev - structured workflows, research orchestration, and institutional memory",
+  "name": "patchani",
+  "version": "0.1.1",
+  "description": "Engineering assistant for Pi - structured workflows, research orchestration, and institutional memory",
   "keywords": [
     "pi-package",
     "design-doc",
@@ -12,19 +12,17 @@
   "author": "Michelangelo Setaro",
   "license": "MIT",
   "main": "extensions/design-doc.ts",
-  "dependencies": {
-    "@quintinshaw/pi-dynamic-workflows": "^3.4.1"
-  },
   "devDependencies": {
     "@antfu/eslint-config": "^3.0.0",
     "@types/node": "^20.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
     "eslint": "^9.0.0",
     "typescript": "^5.0.0",
-    "vitest": "^2.0.0",
-    "@vitest/coverage-v8": "^2.0.0"
+    "vitest": "^2.0.0"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
+    "@quintinshaw/pi-dynamic-workflows": "*",
     "typebox": "*"
   },
   "pi": {
@@ -43,11 +41,12 @@
     "test": "npm run test:unit",
     "test:unit": "vitest run",
     "test:smoke": "bash tests/integration/smoke.sh",
+    "test:all": "npm run typecheck && npm run test:unit && npm run test:smoke",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint extensions/**/*.ts",
     "typecheck": "tsc --noEmit",
-    "postinstall": "node scripts/postinstall.js || true"
+    "prepublishOnly": "npm run test:all"
   },
   "repository": {
     "type": "git",

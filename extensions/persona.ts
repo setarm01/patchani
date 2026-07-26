@@ -8,7 +8,7 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import chalk from "chalk";
+
 
 export default function (pi: ExtensionAPI) {
   
@@ -55,7 +55,7 @@ export default function (pi: ExtensionAPI) {
       personaActive = true;
       
       // Simple console banner - UI removed due to Pi freeze issue
-      console.log(chalk.cyan("\nPATCHANI") + chalk.dim(" - Engineering Assistant\n"));
+      console.log("\n\x1b[36mPATCHANI\x1b[0m\x1b[2m - Engineering Assistant\x1b[0m\n");
       
       ctx.ui.notify("Persona active", "info");
     } else {
