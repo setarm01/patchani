@@ -1,6 +1,6 @@
 {
   "name": "@mksetaro/patchani",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Engineering assistant for Pi Dev - structured workflows, research orchestration, and institutional memory",
   "keywords": [
     "pi-package",
