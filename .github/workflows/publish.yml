@@ -1,4 +1,4 @@
-name: Publish to NPM
+name: Publish
 
 on:
   push:
@@ -24,73 +24,70 @@ jobs:
       packages: write
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - run: npm test
 
-      - name: Get version from package.json
-        id: package-version
+      - name: Get version
+        id: version
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
-      - name: Check if version tag exists
+      - name: Check tag exists
         id: check-tag
         run: |
-          if git rev-parse "v${{ steps.package-version.outputs.version }}" >/dev/null 2>&1; then
+          if git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Publish to npm
+      - name: Extract changelog
+        if: steps.check-tag.outputs.exists == 'false'
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Extract section between [VERSION] and next [VERSION] or EOF
+          CONTENT=$(awk "/## \[$VERSION\]/{flag=1;next}/## \[/{flag=0}flag" CHANGELOG.md)
+          # Escape for GitHub Actions output
+          CONTENT="${CONTENT//'%'/'%25'}"
+          CONTENT="${CONTENT//$'\n'/'%0A'}"
+          CONTENT="${CONTENT//$'\r'/'%0D'}"
+          echo "content=$CONTENT" >> $GITHUB_OUTPUT
+
+      - name: Publish
         if: steps.check-tag.outputs.exists == 'false'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create git tag
+      - name: Create tag
         if: steps.check-tag.outputs.exists == 'false'
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git tag -a "v${{ steps.package-version.outputs.version }}" -m "Release v${{ steps.package-version.outputs.version }}"
-          git push origin "v${{ steps.package-version.outputs.version }}"
+          git tag -a "v${{ steps.version.outputs.version }}" -m "Release v${{ steps.version.outputs.version }}"
+          git push origin "v${{ steps.version.outputs.version }}"
 
-      - name: Create GitHub Release
+      - name: Create release
         if: steps.check-tag.outputs.exists == 'false'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.package-version.outputs.version }}
-          release_name: v${{ steps.package-version.outputs.version }}
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
           body: |
-            ## What's Changed
-            
-            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
+            ${{ steps.changelog.outputs.content }}
             
             ## Installation
             
             ```bash
-            pi install npm:@mksetaro/patchani@${{ steps.package-version.outputs.version }}
+            pi install npm:@mksetaro/patchani@${{ steps.version.outputs.version }}
             ```
-          draft: false
-          prerelease: false
-
-      - name: Skip - version already published
-        if: steps.check-tag.outputs.exists == 'true'
-        run: |
-          echo "Version v${{ steps.package-version.outputs.version }} already published"
-          echo "Bump version in package.json to trigger a new release"

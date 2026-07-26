@@ -8,12 +8,3 @@ coverage/
 .vitest-cache/
 *.test.js
 *.test.d.ts
-
-# Workflow analysis artifacts (do not commit)
-DOCUMENTATION-ANALYSIS.md
-IMPLEMENTATION-SUMMARY.md
-.github/AGENT2-DELIVERABLES.md
-.github/workflows/ANALYSIS.md
-.github/workflows/INDEX.md
-.github/workflows/REFACTORING-SUMMARY.md
-.github/workflows/VISUAL-COMPARISON.md

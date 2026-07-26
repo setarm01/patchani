@@ -1,0 +1,75 @@
+name: Test PR
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run test:unit
+
+  smoke:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Cache Pi
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pi
+            ~/.npm/_npx
+          key: pi-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            pi-${{ runner.os }}-
+
+      - name: Install Pi
+        run: npm install -g @earendil-works/pi-coding-agent
+
+      - name: Configure Pi
+        run: |
+          mkdir -p ~/.pi/agent
+          cat > ~/.pi/agent/settings.json << 'EOF'
+          {
+            "defaultProvider": "openai",
+            "defaultModel": "gpt-4o",
+            "packages": [],
+            "extensions": [],
+            "skills": []
+          }
+          EOF
+          cat > ~/.pi/agent/auth.json << 'EOF'
+          {
+            "openai": {
+              "access": "mock-key",
+              "refresh": "",
+              "expires": 9007199254740991,
+              "baseUrl": "https://mockgpt.wiremockapi.cloud/v1",
+              "type": "oauth"
+            }
+          }
+          EOF
+
+      - run: npm run test:smoke
