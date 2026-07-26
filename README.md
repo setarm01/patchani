@@ -5,7 +5,7 @@ Engineering assistant for Pi Dev.
 ## Install
 
 ```bash
-pi install npm:@mksetaro/patchani
+pi install npm:patchani
 ```
 
 ## What It Does
