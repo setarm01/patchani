@@ -43,6 +43,19 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Extract changelog for version
+        if: steps.check-tag.outputs.exists == 'false'
+        id: changelog
+        run: |
+          VERSION="${{ steps.package-version.outputs.version }}"
+          # Extract section between [VERSION] and next [VERSION] or EOF
+          CONTENT=$(awk "/## \[$VERSION\]/{flag=1;next}/## \[/{flag=0}flag" CHANGELOG.md)
+          # Escape for GitHub Actions output
+          CONTENT="${CONTENT//'%'/'%25'}"
+          CONTENT="${CONTENT//$'\n'/'%0A'}"
+          CONTENT="${CONTENT//$'\r'/'%0D'}"
+          echo "content=$CONTENT" >> $GITHUB_OUTPUT
+
       - name: Publish to npm
         if: steps.check-tag.outputs.exists == 'false'
         run: npm publish
@@ -59,16 +72,14 @@ jobs:
 
       - name: Create GitHub Release
         if: steps.check-tag.outputs.exists == 'false'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.package-version.outputs.version }}
-          release_name: v${{ steps.package-version.outputs.version }}
+          name: v${{ steps.package-version.outputs.version }}
           body: |
             ## What's Changed
             
-            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
+            ${{ steps.changelog.outputs.content }}
             
             ## Installation
             
