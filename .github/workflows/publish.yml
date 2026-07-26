@@ -56,12 +56,7 @@ jobs:
         run: |
           VERSION="${{ steps.version.outputs.version }}"
           # Extract section between [VERSION] and next [VERSION] or EOF
-          CONTENT=$(awk "/## \[$VERSION\]/{flag=1;next}/## \[/{flag=0}flag" CHANGELOG.md)
-          # Escape for GitHub Actions output
-          CONTENT="${CONTENT//'%'/'%25'}"
-          CONTENT="${CONTENT//$'\n'/'%0A'}"
-          CONTENT="${CONTENT//$'\r'/'%0D'}"
-          echo "content=$CONTENT" >> $GITHUB_OUTPUT
+          awk "/## \[$VERSION\]/{flag=1;next}/## \[/{flag=0}flag" CHANGELOG.md > changelog_section.txt
 
       - name: Publish
         if: steps.check-tag.outputs.exists == 'false'
@@ -83,8 +78,9 @@ jobs:
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: v${{ steps.version.outputs.version }}
+          body_path: changelog_section.txt
+          append_body: true
           body: |
-            ${{ steps.changelog.outputs.content }}
             
             ## Installation
             
