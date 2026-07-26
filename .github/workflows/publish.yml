@@ -4,17 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'package.json'
-      - 'extensions/**'
-      - 'persona/**'
-      - 'scripts/**'
-      - 'CHANGELOG.md'
-      - '!.github/**'
-      - '!*.md'
-      - 'CHANGELOG.md'
-      - '!tests/**'
-      - '!docs/**'
 
 jobs:
   publish:

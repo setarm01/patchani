@@ -24,6 +24,7 @@
     "@vitest/coverage-v8": "^2.0.0"
   },
   "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
     "typebox": "*"
   },
   "pi": {
@@ -39,8 +40,9 @@
     ]
   },
   "scripts": {
-    "test": "npm run test:unit",
+    "test": "npm run test:unit && npm run test:smoke",
     "test:unit": "vitest run",
+    "test:smoke": "bash tests/integration/smoke.sh",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint extensions/**/*.ts",
