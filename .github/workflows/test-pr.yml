@@ -7,7 +7,7 @@ on:
       - dev
 
 jobs:
-  test:
+  unit:
     runs-on: ubuntu-latest
     
     steps:
@@ -22,7 +22,20 @@ jobs:
 
       - run: npm run test:unit
 
-      - name: Cache Pi installation
+  smoke:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Cache Pi
         uses: actions/cache@v4
         with:
           path: |
@@ -35,7 +48,7 @@ jobs:
       - name: Install Pi
         run: npm install -g @earendil-works/pi-coding-agent
 
-      - name: Configure Pi for smoke test
+      - name: Configure Pi
         run: |
           mkdir -p ~/.pi/agent
           cat > ~/.pi/agent/settings.json << 'EOF'
