@@ -1,68 +1,34 @@
 # Patchani
 
-**Engineering assistant for Pi Dev** - becomes Patchani persona automatically on startup.
+Engineering assistant for Pi Dev.
 
-## Installation
+## Install
 
 ```bash
 pi install npm:@mksetaro/patchani
 ```
 
-Or install a specific version:
+## What It Does
 
-```bash
-pi install npm:@mksetaro/patchani@0.1.0
-```
+**Persona:** Ask-before-acting discipline, fact-checking, direct communication.
 
-**On first Pi startup:** Patchani persona activates automatically with welcome screen.
+**Design Docs:** Invoke `/design-doc <topic>` - researches GitHub/codebase/web in parallel, validates claims, section-by-section approval.
 
-## What You Get
+**Standup Sync:** Auto-runs on session start - syncs GitHub (issues/PRs/projects) → Apple Reminders.
 
-**Patchani Persona:**
-- Activates on session start
-- Ask-before-acting discipline
-- Fact-checking enforcement
-- Direct communication (no prose padding)
-- Structured workflows
+## Commands
 
-**Design Documents (F1):**
-- Activates automatically when discussion leads to implementation
-- Or invoke: `/design-doc <topic>`
-- Background research (GitHub + codebase + web) runs parallel
-- Validates and fact-checks all claims
-- Section-by-section with approval gates
-
-**Standup Sync (F2):**
-- Runs automatically on session start in git repos
-- Or invoke: `/standup`
-- Syncs GitHub → Apple Reminders
-- 4 lists: Issues, Tasks, PRs, Patchani ToDo
-- Quick add: `/standup-todo <text>`
+- `/design-doc <topic>` - Start design document
+- `/standup` - Manual sync
+- `/standup-todo <text>` - Quick add to Patchani ToDo
 
 ## Requirements
 
-- **macOS** (Apple Reminders)
-- **GitHub CLI** (`gh`) authenticated
-- **Git repository** (for standup sync)
+- macOS (Apple Reminders)
+- GitHub CLI (`gh`) authenticated
+- Git repository (for standup)
 
-## Tools
+## Docs
 
-Pi can call these automatically:
-
-**Design Doc:** `design_doc_start`, `design_doc_validate`, `design_doc_research`, `design_doc_fact_check`, `design_doc_next_section`
-
-**Standup:** `standup_sync`, `standup_add_todo`
-
-## Documentation
-
-- **Design Spec:** `product-design-document.md`
-- **Implementation:** `IMPLEMENTATION.md`
-- **Persona:** `persona/patchani.md`
-
-## License
-
-MIT
-
-## Author
-
-Michelangelo Setaro
+- `persona/patchani.md` - Persona definition
+- `CHANGELOG.md` - Version history

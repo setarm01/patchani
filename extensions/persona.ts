@@ -54,48 +54,8 @@ export default function (pi: ExtensionAPI) {
     if (personaContent) {
       personaActive = true;
       
-      // Show welcome screen in TUI mode only
-      if (ctx.mode === "tui") {
-        const { Text, Box } = await import("@earendil-works/pi-tui");
-        
-        await ctx.ui.custom((tui, theme, keybindings, done) => {
-          const width = 60;
-          const lines = [
-            "",
-            chalk.bold.cyan("  PATCHANI"),
-            "",
-            chalk.dim("  Engineering Assistant for Pi Dev"),
-            "",
-            chalk.dim("  • Design documents with research workflows"),
-            chalk.dim("  • GitHub → Apple Reminders sync"),
-            chalk.dim("  • Structured planning & execution"),
-            "",
-            chalk.dim.italic("  Press any key to continue..."),
-            ""
-          ];
-          
-          const content = lines.join("\n");
-          const text = new Text(content, 0, 0);
-          const box = new Box(
-            text,
-            { border: "rounded", borderColor: "cyan", title: " Welcome ", titleColor: "cyan" },
-            width,
-            lines.length + 2
-          );
-          
-          return {
-            render: (w: number) => box.render(w),
-            invalidate: () => {},
-            handleKey: () => {
-              done(null);
-              return { close: true };
-            }
-          };
-        });
-      } else {
-        // Simple console banner for non-TUI modes
-        console.log(chalk.cyan("\nPATCHANI") + chalk.dim(" - Engineering Assistant for Pi Dev\n"));
-      }
+      // Simple console banner - UI removed due to Pi freeze issue
+      console.log(chalk.cyan("\nPATCHANI") + chalk.dim(" - Engineering Assistant\n"));
       
       ctx.ui.notify("Persona active", "info");
     } else {
