@@ -1,8 +1,9 @@
-name: Canonical Tests
+name: Test PR
 
 on:
   pull_request:
     branches:
+      - main
       - dev
 
 jobs:
@@ -29,7 +30,7 @@ jobs:
 
       - name: Summary
         run: |
-          echo "✅ All canonical tests passed!"
+          echo "✅ All tests passed!"
           echo ""
           echo "Ran:"
           echo "  ✓ Unit tests (vitest)"
