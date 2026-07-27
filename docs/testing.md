@@ -6,6 +6,8 @@
 npm test              # Unit tests only (fast)
 npm run test:all      # Full suite before commit/publish
 npm run test:watch    # TDD mode
+npm run preview-tui   # Interactive TUI preview
+npm run test-tui      # Automated TUI tests
 ```
 
 ---
@@ -26,7 +28,25 @@ npm run test:watch    # TDD mode
 - Command handlers
 - Error cases
 
-### 2. Type Check
+### 2. TUI Preview & Testing
+
+**Interactive Preview:** `npm run preview-tui`
+
+**What:** Standalone TUI component viewer for visual validation
+
+**Features:**
+- Live preview of all TUI components
+- Navigate between screens (←/→ arrow keys)
+- See actual rendering with theme colors
+- Test interactions without launching Pi
+
+**Previews:**
+- Work Selector (issue/PR picker)
+- Complexity Router (design doc gate)
+- Design Decision Prompt
+- Activation Banner
+
+### 3. Type Check
 
 **What:** Verify TypeScript compilation
 
@@ -34,7 +54,7 @@ npm run test:watch    # TDD mode
 
 **Command:** `tsc --noEmit`
 
-### 3. Smoke Tests
+### 4. Smoke Tests
 
 **What:** Test the installed package as users will experience it
 
@@ -72,6 +92,20 @@ Runs automatically via `prepublishOnly` hook:
 
 ---
 
+## TUI Development Workflow
+
+1. **Edit component** in `extensions/*.ts`
+2. **Preview live** with `npm run preview-tui`
+4. **Test in Pi** by launching new session
+
+**Why standalone preview?**
+- Fast feedback loop (no Pi restart)
+- Visual validation of all states
+- Easy to test edge cases
+- No need for mock data setup
+
+---
+
 ## Adding New Extensions
 
 1. Create extension in `extensions/`
@@ -94,11 +128,16 @@ Runs automatically via `prepublishOnly` hook:
 → Check .npmignore - missing files?
 → Run `npm pack --dry-run` to see contents
 
+### TUI preview shows wrong colors
+→ Check theme object in preview script
+→ Verify ANSI codes match Pi theme
+
 ---
 
 ## Testing Philosophy
 
-**Unit tests** validate logic with mocks
+**Unit tests** validate logic with mocks  
+**TUI preview** validates visual design interactively  
 **Smoke tests** validate the shipped package
 
 Together they catch:

@@ -1,6 +1,6 @@
 {
   "name": "patchani",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Engineering assistant for Pi - structured workflows, research orchestration, and institutional memory",
   "keywords": [
     "pi-package",
@@ -46,7 +46,8 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint extensions/**/*.ts",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "echo 'Publishing from main - tests already passed in PR'"
+    "prepublishOnly": "echo 'Publishing from main - tests already passed in PR'",
+    "preview-tui": "bash scripts/preview-menu.sh"
   },
   "repository": {
     "type": "git",
@@ -57,5 +58,9 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.2"
+  },
+  "type": "module"
 }

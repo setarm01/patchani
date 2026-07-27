@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2026-07-27
+
+### Added
+- TUI component preview system (`npm run preview-tui`)
+  - Real Pi TUI components rendering (Container, SelectList, Text, Box, Spacer)
+  - Interactive menu to preview Work Selector, Complexity Router, Activation Banner
+  - Visual validation tool for TUI development
+- TUI extensions: work-selector, complexity-router, workflow-graph
+
+### Changed
+- Updated persona discipline: zero artifacts in repo without approval
+- Internal artifacts moved to `~/.patchani/` (session continuity)
+- Improved testing documentation with TUI preview workflow
+- Package type: "module" for ESM support
+
+### Removed
+- Noisy documentation artifacts (DELIVERABLES.md, INTEGRATION-*.md)
+- Useless test-ui.js mockup (replaced with real component preview)
+
 ## [0.1.2] - 2026-07-26
 
 ### Fixed

@@ -71,5 +71,5 @@ jobs:
             }
           }
           EOF
-
+      - name: Pi Smoke Test
       - run: npm run test:smoke
