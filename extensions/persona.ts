@@ -9,9 +9,6 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { showWorkSelector } from "./work-selector";
-import { assessComplexity } from "./complexity-router";
-import { showWorkflowGraph } from "./workflow-graph";
 
 // Work item structure for compatibility with work-selector
 interface WorkItem {
@@ -190,6 +187,7 @@ end tell
         }
         
         // Step 1: Show work selector
+        const { showWorkSelector } = await import("./work-selector");
         const selectedItemId = await showWorkSelector(ctx, workItems);
         
         if (!selectedItemId) {
@@ -207,6 +205,7 @@ end tell
         }
         
         // Step 2: Assess complexity and route
+        const { assessComplexity } = await import("./complexity-router");
         const decision = await assessComplexity(ctx, {
           label: selectedItem.title,
           value: selectedItem.id,
