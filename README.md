@@ -16,11 +16,24 @@ pi install npm:patchani
 
 **Standup Sync:** Auto-runs on session start - syncs GitHub (issues/PRs/projects) → Apple Reminders.
 
+**TUI Components:** Interactive work selector, complexity router, activation banner.
+
 ## Commands
 
 - `/design-doc <topic>` - Start design document
 - `/standup` - Manual sync
 - `/standup-todo <text>` - Quick add to Patchani ToDo
+
+## Development
+
+### Testing
+
+```bash
+npm test              # Unit tests
+npm run test:all      # Full test suite
+```
+
+See `docs/testing.md` for details.
 
 ## Requirements
 
@@ -30,5 +43,7 @@ pi install npm:patchani
 
 ## Docs
 
-- `persona/patchani.md` - Persona definition
-- `CHANGELOG.md` - Version history
+- [Product Design Document](docs/product-design-document.md) 
+- [Testing guide](docs/testing.md) 
+- [Persona definition](persona/patchani.md)
+- [Version history](CHANGELOG.md)

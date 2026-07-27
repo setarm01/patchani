@@ -35,7 +35,9 @@ const mockExtensionAPI = () => {
 const mockContext = (cwd: string = process.cwd()) => ({
   cwd,
   ui: {
-    notify: vi.fn()
+    notify: vi.fn(),
+    setWidget: vi.fn(),
+    custom: vi.fn()
   },
   sessionManager: {
     getEntries: vi.fn(() => [])
@@ -97,9 +99,11 @@ describe("Persona Extension", () => {
     // Trigger session_start
     await mockAPI._trigger("session_start", {}, mockCtx);
     
-    expect(mockCtx.ui.notify).toHaveBeenCalledWith(
-      expect.stringContaining("Persona active"),
-      expect.any(String)
+    // Should set the status widget
+    expect(mockCtx.ui.setWidget).toHaveBeenCalledWith(
+      "patchani-status",
+      expect.any(Function),
+      expect.any(Object)
     );
   });
   

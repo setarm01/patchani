@@ -8,3 +8,4 @@ coverage/
 .vitest-cache/
 *.test.js
 *.test.d.ts
+.patchani/
