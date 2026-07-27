@@ -18,7 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated persona discipline: zero artifacts in repo without approval
 - Internal artifacts moved to `~/.patchani/` (session continuity)
 - Improved testing documentation with TUI preview workflow
-- Package type: "module" for ESM support
+
+### Fixed
+- Unit test mocks updated for widget API (setWidget, custom)
+- Removed `"type": "module"` from package.json (caused test failures)
 
 ### Removed
 - Noisy documentation artifacts (DELIVERABLES.md, INTEGRATION-*.md)

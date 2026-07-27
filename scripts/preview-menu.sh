@@ -17,9 +17,9 @@ echo
 read -p "Choice: " choice
 
 case $choice in
-  1) node scripts/preview-tui.js 1 ;;
-  2) node scripts/preview-tui.js 2 ;;
-  3) node scripts/preview-tui.js 3 ;;
+  1) node scripts/preview-tui.mjs 1 ;;
+  2) node scripts/preview-tui.mjs 2 ;;
+  3) node scripts/preview-tui.mjs 3 ;;
   q|Q) exit 0 ;;
   *) echo "Invalid choice" ; exit 1 ;;
 esac
