@@ -7,7 +7,6 @@ npm test              # Unit tests only (fast)
 npm run test:all      # Full suite before commit/publish
 npm run test:watch    # TDD mode
 npm run preview-tui   # Interactive TUI preview
-npm run test-tui      # Automated TUI tests
 ```
 
 ---
@@ -28,7 +27,7 @@ npm run test-tui      # Automated TUI tests
 - Command handlers
 - Error cases
 
-### 2. TUI Preview & Testing
+### 2. TUI Preview
 
 **Interactive Preview:** `npm run preview-tui`
 
